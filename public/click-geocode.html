@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2. 點擊查地址 | Google Maps 練習</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html">Google Maps 練習</a>
+    <nav>
+      <a href="heatmap.html">1 熱力圖</a>
+      <a href="click-geocode.html" class="active">2 點擊查地址</a>
+      <a href="marker-cluster.html">3 標記聚合</a>
+      <a href="directions.html">4 路線規劃</a>
+      <a href="factcheck.html">5 訊息查證</a>
+    </nav>
+  </header>
+
+  <main class="map-page">
+    <aside class="panel">
+      <h1>2. 點擊查地址</h1>
+      <p>在地圖上任意點一下，就會在該位置放上標記，並查詢、顯示這個位置的地址。</p>
+
+      <h2>最近一次點擊</h2>
+      <div id="status" class="status">尚未點擊地圖</div>
+
+      <h2>使用到的技術</h2>
+      <ul>
+        <li><code>map.addListener('click')</code>：取得點擊位置的經緯度</li>
+        <li><code>AdvancedMarkerElement</code>：畫出標記</li>
+        <li><code>Geocoder</code>：反向地理編碼（座標 → 地址）</li>
+        <li><code>InfoWindow</code>：在標記上方顯示地址</li>
+      </ul>
+    </aside>
+
+    <div id="map"></div>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="js/loader.js"></script>
+  <script src="js/click-geocode.js"></script>
+</body>
+</html>

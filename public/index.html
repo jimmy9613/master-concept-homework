@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Google Maps JavaScript API 練習</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html">Google Maps 練習</a>
+    <nav>
+      <a href="heatmap.html">1 熱力圖</a>
+      <a href="click-geocode.html">2 點擊查地址</a>
+      <a href="marker-cluster.html">3 標記聚合</a>
+      <a href="directions.html">4 路線規劃</a>
+      <a href="factcheck.html">5 訊息查證</a>
+    </nav>
+  </header>
+
+  <main class="home">
+    <h1>Google Maps JavaScript API 練習</h1>
+
+    <div class="cards">
+      <a class="card" href="heatmap.html">
+        <h2>1. 熱力圖</h2>
+        <p>以台北熱門地點產生約 1,500 個資料點，用 deck.gl HeatmapLayer 畫成熱力圖，可調整半徑與強度。</p>
+      </a>
+      <a class="card" href="click-geocode.html">
+        <h2>2. 點擊查地址</h2>
+        <p>點擊地圖任意位置，放上標記並透過反向地理編碼顯示該位置的地址。</p>
+      </a>
+      <a class="card" href="marker-cluster.html">
+        <h2>3. 標記聚合</h2>
+        <p>在全台 8 個城市放 100 個標記，縮小地圖時自動合併成聚合點。</p>
+      </a>
+      <a class="card" href="directions.html">
+        <h2>4. 路線規劃</h2>
+        <p>輸入起訖點、選擇走路 / 開車 / 大眾運輸，畫出路線並顯示時長與距離。</p>
+      </a>
+      <a class="card" href="factcheck.html">
+        <h2>5. 訊息查證</h2>
+        <p>先檢索 Google 新聞、Cofacts、維基百科的最新資料，再由 Gemini 判斷網路流傳訊息的真偽並附上來源。</p>
+      </a>
+    </div>
+
+    <section class="setup">
+      <b>執行前準備</b>
+      <ol>
+        <li>到 Google Cloud Console 建立 API 金鑰，並啟用 <code>Maps JavaScript API</code>、<code>Geocoding API</code>、<code>Routes API</code>，填入 <code>public/config.js</code>。</li>
+        <li>（功能 5）到 Google AI Studio 申請 Gemini 金鑰，把 <code>.env.example</code> 複製成 <code>.env</code>，填入 <code>GEMINI_API_KEY</code>。</li>
+        <li>在專案資料夾執行 <code>npm install</code>（第一次），再執行 <code>npm start</code>，用瀏覽器開啟 <code>http://localhost:8000</code>。</li>
+      </ol>
+      每一題的解題思路請見 <a href="solution.html">📘 解題說明</a>；完整的執行方式與常見問題請見 <code>README.md</code>。
+    </section>
+  </main>
+</body>
+</html>

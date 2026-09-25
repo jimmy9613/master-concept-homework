@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>5. 訊息查證 | Google Maps 練習</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html">Google Maps 練習</a>
+    <nav>
+      <a href="heatmap.html">1 熱力圖</a>
+      <a href="click-geocode.html">2 點擊查地址</a>
+      <a href="marker-cluster.html">3 標記聚合</a>
+      <a href="directions.html">4 路線規劃</a>
+      <a href="factcheck.html" class="active">5 訊息查證</a>
+    </nav>
+  </header>
+
+  <main class="map-page">
+    <aside class="panel">
+      <h1>5. 網路訊息真偽判斷</h1>
+      <p>輸入網路上流傳的訊息，系統會先<b>上網檢索最新資料</b>，再交給 Gemini 判斷真偽並附上參考來源。</p>
+
+      <form id="check-form">
+        <label class="field">
+          <span>要查證的訊息</span>
+          <textarea id="message" rows="6" maxlength="2000" placeholder="貼上網路上看到的訊息…" required></textarea>
+        </label>
+
+        <div class="field">
+          <span>範例（點一下帶入）</span>
+          <div id="presets" class="presets"></div>
+        </div>
+
+        <button type="submit" id="submit" class="btn">開始查證</button>
+      </form>
+
+      <h2>如何做到根據「即時」資訊回答？</h2>
+      <p>模型的知識停在訓練資料的截止日，<b>不能只靠記憶</b>回答時事。所以採用 <b>RAG（檢索增強生成）</b>：</p>
+      <ol class="how-list">
+        <li><b>產生關鍵字</b>：Gemini 把訊息轉成檢索用的關鍵字。</li>
+        <li><b>檢索即時資料</b>：伺服器用關鍵字查 Google 新聞（最新新聞）、Cofacts（台灣謠言查核）、維基百科（背景知識）。</li>
+        <li><b>根據資料判斷</b>：把訊息和檢索結果一起交給 Gemini，要求它依據資料判斷，並列出引用的資料編號。</li>
+      </ol>
+      <p style="color:#5f6368;font-size:13px">來源由系統檢索而來、再依編號對應，所以不會出現模型編造的網址。</p>
+    </aside>
+
+    <section class="results">
+      <article class="result-card" id="result"></article>
+    </section>
+  </main>
+
+  <script src="js/factcheck.js"></script>
+</body>
+</html>

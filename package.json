@@ -1,0 +1,16 @@
+{
+  "name": "google-maps-and-llm-factcheck",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --use-system-ca --env-file-if-exists=.env server/index.js"
+  },
+  "engines": {
+    "node": ">=22.15"
+  },
+  "dependencies": {
+    "@google/genai": "^2.24.0",
+    "express": "^5.2.1"
+  }
+}

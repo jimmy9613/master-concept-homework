@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>4. 路線規劃 | Google Maps 練習</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html">Google Maps 練習</a>
+    <nav>
+      <a href="heatmap.html">1 熱力圖</a>
+      <a href="click-geocode.html">2 點擊查地址</a>
+      <a href="marker-cluster.html">3 標記聚合</a>
+      <a href="directions.html" class="active">4 路線規劃</a>
+      <a href="factcheck.html">5 訊息查證</a>
+    </nav>
+  </header>
+
+  <main class="map-page">
+    <aside class="panel">
+      <h1>4. 出行路線規劃</h1>
+
+      <form id="route-form">
+        <div class="route-inputs">
+          <label class="field">
+            <span><i class="dot origin"></i>出發地址</span>
+            <input type="text" id="origin" value="台北車站" placeholder="輸入出發地址或地標" required />
+          </label>
+          <label class="field">
+            <span><i class="dot destination"></i>目的地址</span>
+            <input type="text" id="destination" value="台北101" placeholder="輸入目的地址或地標" required />
+          </label>
+          <button type="button" id="swap" class="swap-btn" title="交換出發地與目的地">⇅</button>
+        </div>
+
+        <fieldset class="modes">
+          <legend>出行方式</legend>
+          <label><input type="radio" name="mode" value="WALKING" /><span>🚶 走路</span></label>
+          <label><input type="radio" name="mode" value="DRIVING" checked /><span>🚗 開車</span></label>
+          <label><input type="radio" name="mode" value="TRANSIT" /><span>🚌 大眾運輸</span></label>
+        </fieldset>
+
+        <button type="submit" id="submit" class="btn">規劃路線</button>
+      </form>
+
+      <div id="status" class="status" hidden></div>
+
+      <div id="result" class="route-result" hidden>
+        <span id="duration" class="duration"></span><span id="distance" class="distance"></span>
+        <p id="endpoints" class="endpoints"></p>
+        <!-- 大眾運輸：逐段顯示要搭什麼、在哪上下車（由 directions.js 產生） -->
+        <div id="transit-steps" class="transit-steps" hidden></div>
+      </div>
+
+      <h2>使用到的技術</h2>
+      <ul>
+        <li><code>Route.computeRoutes()</code>：向 Routes API 請求路線</li>
+        <li><code>route.createPolylines()</code>：把路徑畫成折線</li>
+        <li><code>leg.steps[].transitDetails</code>：大眾運輸要搭的路線、上下車站</li>
+        <li><code>AdvancedMarkerElement</code> + <code>PinElement</code>：起訖點標記</li>
+        <li><code>map.fitBounds()</code>：自動縮放到整條路線</li>
+      </ul>
+    </aside>
+
+    <div id="map"></div>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="js/loader.js"></script>
+  <script src="js/directions.js"></script>
+</body>
+</html>

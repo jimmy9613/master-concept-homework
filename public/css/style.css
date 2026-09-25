@@ -1,0 +1,266 @@
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+  color: #202124;
+  background: #f1f3f4;
+}
+
+/* ---------- 頂部導覽列 ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 52px;
+  padding: 0 20px;
+  background: #1a73e8;
+  color: #fff;
+}
+.topbar .brand { color: #fff; font-weight: 700; text-decoration: none; white-space: nowrap; }
+.topbar nav { display: flex; gap: 4px; overflow-x: auto; }
+.topbar nav a {
+  padding: 6px 12px;
+  border-radius: 16px;
+  color: #e8f0fe;
+  text-decoration: none;
+  white-space: nowrap;
+  font-size: 14px;
+}
+.topbar nav a:hover { background: rgba(255, 255, 255, 0.15); }
+.topbar nav a.active { background: #fff; color: #1a73e8; font-weight: 700; }
+
+/* ---------- 地圖頁：左側面板 + 右側地圖 ---------- */
+.map-page {
+  display: flex;
+  height: calc(100% - 52px);
+}
+.panel {
+  width: 340px;
+  flex-shrink: 0;
+  padding: 20px;
+  overflow-y: auto;
+  background: #fff;
+  border-right: 1px solid #dadce0;
+}
+.panel h1 { margin: 0 0 8px; font-size: 20px; }
+.panel h2 { margin: 20px 0 8px; font-size: 14px; color: #5f6368; }
+.panel p, .panel li { font-size: 14px; line-height: 1.6; }
+.panel ul { padding-left: 20px; margin: 0; }
+.panel code { background: #f1f3f4; padding: 1px 4px; border-radius: 4px; font-size: 13px; }
+#map { flex: 1; min-height: 300px; }
+
+@media (max-width: 720px) {
+  .map-page { flex-direction: column; height: auto; }
+  .panel { width: 100%; border-right: 0; border-bottom: 1px solid #dadce0; }
+  #map { height: 70vh; }
+}
+
+/* ---------- 表單元件 ---------- */
+.field { display: block; margin-bottom: 14px; font-size: 14px; }
+.field span { display: block; margin-bottom: 4px; color: #5f6368; }
+.field input[type="range"] { width: 100%; }
+.field input[type="text"] {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  font-size: 15px;
+}
+.field input[type="text"]:focus { outline: 2px solid #1a73e8; border-color: transparent; }
+
+.btn {
+  width: 100%;
+  padding: 10px;
+  border: 0;
+  border-radius: 8px;
+  background: #1a73e8;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn:hover { background: #1765cc; }
+.btn:disabled { background: #9aa0a6; cursor: wait; }
+
+.status { margin-top: 12px; padding: 10px 12px; border-radius: 8px; background: #f1f3f4; font-size: 14px; }
+.status.error { background: #fce8e6; color: #c5221f; }
+
+/* ---------- 功能 4：路線規劃面板 ---------- */
+.route-inputs { position: relative; }
+.swap-btn {
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border: 1px solid #dadce0;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  font-size: 16px;
+}
+.route-inputs .field input[type="text"] { width: calc(100% - 34px); }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+.dot.origin { background: #188038; }
+.dot.destination { background: #d93025; }
+
+.modes { display: flex; gap: 6px; margin: 0 0 14px; border: 0; padding: 0; }
+.modes legend { padding: 0; margin-bottom: 4px; font-size: 14px; color: #5f6368; }
+.modes label { flex: 1; position: relative; }
+.modes input { position: absolute; opacity: 0; pointer-events: none; }
+.modes label span {
+  display: block;
+  padding: 8px 4px;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+}
+.modes input:checked + span { background: #e8f0fe; border-color: #1a73e8; color: #1a73e8; font-weight: 700; }
+.modes input:focus-visible + span { outline: 2px solid #1a73e8; }
+
+.route-result { margin-top: 16px; padding: 14px; border: 2px solid #d93025; border-radius: 8px; }
+.route-result .duration { font-size: 24px; font-weight: 700; color: #188038; }
+.route-result .distance { font-size: 16px; color: #5f6368; margin-left: 6px; }
+.route-result .endpoints { margin: 8px 0 0; font-size: 13px; color: #5f6368; }
+
+/* ---------- InfoWindow 內容 ---------- */
+.info { max-width: 260px; font-size: 14px; line-height: 1.5; }
+.info .address { font-weight: 700; margin-bottom: 4px; }
+.info .coords { color: #5f6368; font-size: 12px; }
+
+/* ---------- 錯誤橫幅（由 loader.js 建立） ---------- */
+.error-banner {
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  max-width: 90%;
+  padding: 12px 18px;
+  border-radius: 8px;
+  background: #c5221f;
+  color: #fff;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ---------- 首頁 ---------- */
+.home { max-width: 860px; margin: 0 auto; padding: 32px 20px; }
+.home h1 { margin-top: 0; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.card {
+  display: block;
+  padding: 18px;
+  border-radius: 12px;
+  background: #fff;
+  color: inherit;
+  text-decoration: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+.card:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
+.card h2 { margin: 0 0 6px; font-size: 17px; color: #1a73e8; }
+.card p { margin: 0; font-size: 14px; color: #5f6368; line-height: 1.6; }
+.setup { margin-top: 32px; padding: 18px 22px; border-radius: 12px; background: #fff; line-height: 1.8; }
+.setup code { background: #f1f3f4; padding: 1px 5px; border-radius: 4px; }
+
+/* ---------- 功能 5：訊息查證 ---------- */
+.field textarea {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: vertical;
+}
+.field textarea:focus { outline: 2px solid #1a73e8; border-color: transparent; }
+.field > span { display: block; margin-bottom: 4px; color: #5f6368; }
+
+.presets, .queries { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  padding: 5px 12px;
+  border: 1px solid #dadce0;
+  border-radius: 16px;
+  background: #fff;
+  font-size: 13px;
+  cursor: pointer;
+}
+.chip:hover { background: #e8f0fe; border-color: #1a73e8; }
+.chip.static { cursor: default; background: #f1f3f4; }
+.chip.static:hover { border-color: #dadce0; }
+.how-list { padding-left: 20px; margin: 0; }
+
+.results { flex: 1; overflow-y: auto; padding: 20px; }
+.results .result-card { max-width: 860px; }
+.result-card {
+  min-height: 160px;
+  padding: 18px 20px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.result-card.error { border-left: 4px solid #d93025; }
+.result-card h3 { margin: 16px 0 6px; font-size: 14px; color: #5f6368; }
+.card-header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 12px; }
+.card-title { font-size: 18px; font-weight: 700; }
+.card-model { margin-left: 8px; font-size: 12px; font-weight: 400; color: #5f6368; }
+.card-status { font-size: 13px; color: #5f6368; white-space: nowrap; }
+.card-note { color: #5f6368; }
+.card-note.warn { color: #c5221f; }
+
+.verdict-row { display: flex; align-items: center; gap: 12px; }
+.verdict-badge { padding: 4px 14px; border-radius: 8px; color: #fff; font-size: 20px; font-weight: 700; }
+.v-true { background: #188038; }
+.v-partly { background: #e37400; }
+.v-false { background: #d93025; }
+.v-unknown { background: #5f6368; }
+.confidence { color: #5f6368; font-size: 13px; }
+.summary { margin: 12px 0 0; font-size: 16px; font-weight: 700; }
+.explanation { margin: 0; white-space: pre-line; }
+.advice { margin: 12px 0 0; padding: 10px 12px; border-radius: 8px; background: #fef7e0; }
+.claims, .sources { margin: 0; padding-left: 20px; }
+.claims li { margin-bottom: 8px; }
+.sources li { margin-bottom: 4px; word-break: break-all; }
+.sources a { color: #1a73e8; }
+.tag { margin-left: 6px; padding: 0 6px; border-radius: 4px; background: #f1f3f4; color: #5f6368; font-size: 12px; white-space: nowrap; }
+.tag.ok { background: #e6f4ea; color: #188038; }
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  margin: 20px auto 8px;
+  border: 3px solid #dadce0;
+  border-top-color: #1a73e8;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 720px) {
+  .results { padding: 12px; }
+}
+.process { margin-top: 16px; padding: 10px 14px; border-radius: 8px; background: #f8f9fa; }
+.process summary { cursor: pointer; font-weight: 700; color: #1a73e8; }
+.process .queries { margin-bottom: 4px; }
+
+/* ---------- 功能 4：大眾運輸搭乘方式 ---------- */
+.transit-steps { margin-top: 12px; padding-top: 12px; border-top: 1px dashed #dadce0; }
+.transit-title { margin-bottom: 8px; font-size: 13px; font-weight: 700; color: #5f6368; }
+.seg { font-size: 14px; }
+.seg.walk { padding: 4px 0 4px 10px; margin-left: 6px; border-left: 3px dotted #9aa0a6; color: #5f6368; }
+.seg.ride { margin: 6px 0; padding: 10px 12px; border-radius: 8px; background: #f8f9fa; }
+.ride-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 6px; }
+.ride-icon { width: 20px; height: 20px; }
+.line-badge { padding: 1px 8px; border-radius: 4px; font-weight: 700; font-size: 13px; }
+.ride-meta { color: #5f6368; font-size: 13px; }
+.stop-row { display: flex; gap: 10px; }
+.stop-time { width: 42px; flex-shrink: 0; font-weight: 700; font-variant-numeric: tabular-nums; }
+.ride-count { margin: 2px 0 2px 52px; color: #5f6368; font-size: 13px; }

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>3. 標記聚合 | Google Maps 練習</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html">Google Maps 練習</a>
+    <nav>
+      <a href="heatmap.html">1 熱力圖</a>
+      <a href="click-geocode.html">2 點擊查地址</a>
+      <a href="marker-cluster.html" class="active">3 標記聚合</a>
+      <a href="directions.html">4 路線規劃</a>
+      <a href="factcheck.html">5 訊息查證</a>
+    </nav>
+  </header>
+
+  <main class="map-page">
+    <aside class="panel">
+      <h1>3. 標記聚合</h1>
+      <p>在台灣 8 個城市周圍放了 <b>100</b> 個標記。地圖縮小時，距離相近的標記會合併成一個「聚合點」，數字代表裡面有幾個標記；放大或點擊聚合點就會展開。</p>
+
+      <h2>目前狀態</h2>
+      <div id="status" class="status">載入中…</div>
+
+      <h2>顏色說明</h2>
+      <ul>
+        <li><b style="color:#ff0000">紅色</b>：聚合數量大於 10 且高於所有聚合點的平均</li>
+        <li><b style="color:#0000ff">藍色</b>：其他聚合點</li>
+      </ul>
+
+      <h2>使用到的技術</h2>
+      <ul>
+        <li><code>AdvancedMarkerElement</code> + <code>PinElement</code>：100 個帶編號的標記</li>
+        <li><code>@googlemaps/markerclusterer</code>：Google 官方的標記聚合函式庫</li>
+      </ul>
+    </aside>
+
+    <div id="map"></div>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="js/loader.js"></script>
+  <!-- Google 官方的標記聚合函式庫，載入後提供全域變數 markerClusterer -->
+  <script src="https://cdn.jsdelivr.net/npm/@googlemaps/markerclusterer@2.6.2/dist/index.min.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/marker-cluster.js"></script>
+</body>
+</html>

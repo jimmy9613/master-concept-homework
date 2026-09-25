@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>1. 熱力圖 | Google Maps 練習</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html">Google Maps 練習</a>
+    <nav>
+      <a href="heatmap.html" class="active">1 熱力圖</a>
+      <a href="click-geocode.html">2 點擊查地址</a>
+      <a href="marker-cluster.html">3 標記聚合</a>
+      <a href="directions.html">4 路線規劃</a>
+      <a href="factcheck.html">5 訊息查證</a>
+    </nav>
+  </header>
+
+  <main class="map-page">
+    <aside class="panel">
+      <h1>1. 熱力圖</h1>
+      <p>以台北 6 個熱門地點為中心，隨機產生約 1,500 個資料點，點越密集、權重越高的地方顏色越紅。</p>
+
+      <h2>調整參數</h2>
+      <label class="field">
+        <input type="checkbox" id="toggle" checked /> 顯示熱力圖
+      </label>
+      <label class="field">
+        <span>半徑 radiusPixels：<b id="radius-value"></b> px</span>
+        <input type="range" id="radius" min="10" max="100" value="40" />
+      </label>
+      <label class="field">
+        <span>強度 intensity：<b id="intensity-value"></b></span>
+        <input type="range" id="intensity" min="0.2" max="4" step="0.1" value="1" />
+      </label>
+
+      <h2>使用到的技術</h2>
+      <ul>
+        <li><code>google.maps.Map</code>：底圖</li>
+        <li>deck.gl <code>HeatmapLayer</code>：計算並畫出熱力圖</li>
+        <li>deck.gl <code>GoogleMapsOverlay</code>：把 deck.gl 圖層疊到 Google 地圖上</li>
+      </ul>
+      <p style="color:#5f6368;font-size:13px">註：Google 原生的 <code>HeatmapLayer</code> 已於 2025/05 棄用、2026/05 下架，官方建議改用 deck.gl。</p>
+    </aside>
+
+    <div id="map"></div>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="js/loader.js"></script>
+  <!-- deck.gl：WebGL 資料視覺化函式庫，載入後提供全域變數 deck -->
+  <script src="https://cdn.jsdelivr.net/npm/deck.gl@9.4.0/dist.min.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/heatmap.js"></script>
+</body>
+</html>
